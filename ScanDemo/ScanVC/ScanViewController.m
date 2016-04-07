@@ -6,6 +6,12 @@
 //  Copyright © 2016年 韩威. All rights reserved.
 //
 
+#define kScreenWidth    [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight   [UIScreen mainScreen].bounds.size.height
+
+#define kScanBoxX       80.0f
+#define kScanBoxWidth   (kScreenWidth - kScanBoxX*2)
+#define kScanBoxY       (kScreenHeight/2.0 - kScanBoxWidth/2.0 - 64.f)
 
 #import "ScanViewController.h"
 #import <AVFoundation/AVFoundation.h>
@@ -21,6 +27,7 @@
 
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
+@property (nonatomic, strong) AVCaptureMetadataOutput *captureMetadataOutput;
 
 //- (void)_setupSubviews;
 
@@ -29,6 +36,10 @@
 @implementation ScanViewController
 
 #pragma mark - life circle
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"二维码/条码";
@@ -39,6 +50,15 @@
                                                                              action:@selector(rightNaviBarBtnClick)];
     
 //    [self _setupSubviews];
+    
+    //http://c0ming.me/qr-code-scan/
+    [[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureInputPortFormatDescriptionDidChangeNotification
+                                                      object:nil
+                                                       queue:[NSOperationQueue currentQueue]
+                                                  usingBlock: ^(NSNotification *_Nonnull note) {
+                                                      _captureMetadataOutput.rectOfInterest = [_videoPreviewLayer metadataOutputRectOfInterestForRect:CGRectMake(kScanBoxX, kScanBoxY, kScanBoxWidth, kScanBoxWidth)];
+                                                  }];
+
     
 }
 
@@ -79,14 +99,17 @@
             NSLog(@"init captureDeviceInput error. %@",[capDeviceInputError localizedDescription]);
             return;
         }
-        AVCaptureMetadataOutput *captureMetadataOutput = [AVCaptureMetadataOutput new];
+            _captureMetadataOutput = [AVCaptureMetadataOutput new];
         _captureSession = [AVCaptureSession new];
         _captureSession.sessionPreset = AVCaptureSessionPresetHigh;
         [_captureSession addInput:input];
-        [_captureSession addOutput:captureMetadataOutput];
-        [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-        [captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
-        captureMetadataOutput.rectOfInterest = CGRectMake(0, 0, 1, 1);
+        [_captureSession addOutput:_captureMetadataOutput];
+        [_captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        [_captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
+    
+    
+    
+//        _captureMetadataOutput.rectOfInterest = CGRectMake(0, 0, 1, 1);
         _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
         _videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         _videoPreviewLayer.frame = _previewView.layer.bounds;
@@ -139,9 +162,7 @@
 #pragma mark - getter
 - (ScanBoxView *)scanBoxView {
     if (!_scanBoxView) {
-        CGFloat width = [UIScreen mainScreen].bounds.size.width - 60.0*2;
-        CGFloat y = [UIScreen mainScreen].bounds.size.height/2.0 - width/2.0 - 64.f;
-        _scanBoxView = [[ScanBoxView alloc] initWithFrame:CGRectMake(60, y, width, width)];
+        _scanBoxView = [[ScanBoxView alloc] initWithFrame:CGRectMake(kScanBoxX, kScanBoxY, kScanBoxWidth, kScanBoxWidth)];
         
         _label = [UILabel new];
         //_label.backgroundColor = [UIColor redColor];
@@ -150,9 +171,9 @@
         _label.font = [UIFont systemFontOfSize:13.f];
         [_label sizeToFit];
         CGRect frame = _label.frame;
-        frame.origin.y = y + width + 5;
+        frame.origin.y = kScanBoxY + kScanBoxWidth + 5;
         _label.frame = frame;
-        _label.center = CGPointMake(_scanBoxView.center.x, y + width + 5 + 10);
+        _label.center = CGPointMake(_scanBoxView.center.x, kScanBoxY + kScanBoxWidth + 5 + 10);
     }
     [_previewView addSubview:_label];
     return _scanBoxView;
