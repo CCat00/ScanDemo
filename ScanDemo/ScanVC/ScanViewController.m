@@ -26,10 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 
 @property (nonatomic, strong) AVCaptureSession *captureSession;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
-@property (nonatomic, strong) AVCaptureMetadataOutput *captureMetadataOutput;
 
-//- (void)_setupSubviews;
+- (void)_setup;
 
 @end
 
@@ -49,33 +47,51 @@
                                                                              target:self
                                                                              action:@selector(rightNaviBarBtnClick)];
     
-//    [self _setupSubviews];
-    
-    //http://c0ming.me/qr-code-scan/
-    [[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureInputPortFormatDescriptionDidChangeNotification
-                                                      object:nil
-                                                       queue:[NSOperationQueue currentQueue]
-                                                  usingBlock: ^(NSNotification *_Nonnull note) {
-                                                      _captureMetadataOutput.rectOfInterest = [_videoPreviewLayer metadataOutputRectOfInterestForRect:CGRectMake(kScanBoxX, kScanBoxY, kScanBoxWidth, kScanBoxWidth)];
-                                                  }];
-
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self initCapture];
+    //[self initCapture];
+    [self _setup];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self stopScanning];
+    //[self stopScanning];
 }
 
 #pragma mark - private Methods
-//- (void)_setupSubviews {
-//    
-//}
+- (void)_setup {
+    AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    switch (authorizationStatus) {
+        case AVAuthorizationStatusNotDetermined: {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler: ^(BOOL granted) {
+                if (granted) {
+                    [self initCapture];
+                } else {
+                    NSLog(@"%@", @"访问受限");
+                }
+            }];
+            break;
+        }
+            
+        case AVAuthorizationStatusAuthorized: {
+            [self initCapture];
+            break;
+        }
+            
+        case AVAuthorizationStatusRestricted:
+        case AVAuthorizationStatusDenied: {
+            NSLog(@"%@", @"访问受限");
+            break;
+        }
+            
+        default: {
+            break;
+        }
+    }
+
+}
 
 
 #pragma mark - action Methods
@@ -84,48 +100,42 @@
 }
 
 - (void)initCapture {
+
+    _captureSession = [AVCaptureSession new];
+    _captureSession.sessionPreset = AVCaptureSessionPresetHigh;
     
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-    [SVProgressHUD showWithStatus:@"正在加载…"];
-    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        __autoreleasing NSError *capDeviceInputError = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&capDeviceInputError];
-        if (!input) {
-            NSLog(@"init captureDeviceInput error. %@",[capDeviceInputError localizedDescription]);
-            return;
-        }
-            _captureMetadataOutput = [AVCaptureMetadataOutput new];
-        _captureSession = [AVCaptureSession new];
-        _captureSession.sessionPreset = AVCaptureSessionPresetHigh;
+    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    __autoreleasing NSError *capDeviceInputError = nil;
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&capDeviceInputError];
+    if (!input) {
+        NSLog(@"init captureDeviceInput error. %@",[capDeviceInputError localizedDescription]);
+    }
+    else {
         [_captureSession addInput:input];
-        [_captureSession addOutput:_captureMetadataOutput];
-        [_captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-        [_captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
-    
-    
-    
-//        _captureMetadataOutput.rectOfInterest = CGRectMake(0, 0, 1, 1);
-        _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
-        _videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        _videoPreviewLayer.frame = _previewView.layer.bounds;
-        [_captureSession startRunning];
+        AVCaptureMetadataOutput *captureMetadataOutput = [AVCaptureMetadataOutput new];
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-            [_previewView.layer addSublayer:_videoPreviewLayer];
-            [_previewView addSubview:self.scanBoxView];
-            [self.scanBoxView startScanAnimation];
-            [SVProgressHUD dismiss];
-//        });
-//    });
-    
-    
-    
-    
+        [_captureSession addOutput:captureMetadataOutput];
+        [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        [captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
+        
+        AVCaptureVideoPreviewLayer *videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
+        videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        videoPreviewLayer.frame = _previewView.layer.bounds;
+        [_previewView.layer addSublayer:videoPreviewLayer];
+        
+        //设置识别范围
+        //http://c0ming.me/qr-code-scan/
+        [[NSNotificationCenter defaultCenter] addObserverForName:AVCaptureInputPortFormatDescriptionDidChangeNotification
+                                                          object:nil
+                                                           queue:[NSOperationQueue currentQueue]
+                                                      usingBlock: ^(NSNotification *_Nonnull note) {
+                                                          captureMetadataOutput.rectOfInterest = [videoPreviewLayer metadataOutputRectOfInterestForRect:CGRectMake(kScanBoxX, kScanBoxY, kScanBoxWidth, kScanBoxWidth)];
+                                                      }];
+
+        [_previewView addSubview:self.scanBoxView];
+        [_captureSession startRunning];
+        [self.scanBoxView startScanAnimation];
+    }
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
