@@ -19,7 +19,7 @@
 #import "ScanResultViewController.h"
 #import "ScanBoxView.h"
 
-@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate>
+@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) ScanBoxView *scanBoxView;
 @property (nonatomic, strong) UILabel *label;
@@ -57,7 +57,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    //[self stopScanning];
+    [self stopScanning];
 }
 
 #pragma mark - private Methods
@@ -97,6 +97,10 @@
 #pragma mark - action Methods
 - (void)rightNaviBarBtnClick {
     NSLog(@"相册");
+    UIImagePickerController *imagePickerCtrl = [[UIImagePickerController alloc] init];
+    imagePickerCtrl.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    imagePickerCtrl.delegate = self;
+    [self presentViewController:imagePickerCtrl animated:YES completion:NULL];
 }
 
 - (void)initCapture {
@@ -136,6 +140,31 @@
         [_captureSession startRunning];
         [self.scanBoxView startScanAnimation];
     }
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
+    
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode
+                                              context:nil
+                                              options:@{CIDetectorAccuracy : CIDetectorAccuracyHigh}];
+    CIImage *image = [[CIImage alloc] initWithImage:originalImage];
+    NSArray *features = [detector featuresInImage:image];
+    CIQRCodeFeature *feature = [features firstObject];
+    if (feature) {
+        ScanResultViewController *resultVC = [[ScanResultViewController alloc] initWithNibName:@"ScanResultViewController" bundle:nil];
+        resultVC.resultString = feature.messageString;
+        [self.navigationController pushViewController:resultVC animated:YES];
+    } else {
+        NSLog(@"在图片中未检测到二维码");
+    }
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - AVCaptureMetadataOutputObjectsDelegate
