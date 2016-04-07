@@ -154,13 +154,25 @@
     NSArray *features = [detector featuresInImage:image];
     CIQRCodeFeature *feature = [features firstObject];
     if (feature) {
+        [picker dismissViewControllerAnimated:YES completion:NULL];
         ScanResultViewController *resultVC = [[ScanResultViewController alloc] initWithNibName:@"ScanResultViewController" bundle:nil];
         resultVC.resultString = feature.messageString;
         [self.navigationController pushViewController:resultVC animated:YES];
     } else {
         NSLog(@"在图片中未检测到二维码");
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+         UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:@"提示"
+                                                                          message:@"在图片中未检测到二维码"
+                                                                   preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"知道了"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [alertVC dismissViewControllerAnimated:YES completion:NULL];
+                                                       }];
+        [alertVC addAction:action];
+        [self presentViewController:alertVC animated:YES completion:NULL];
     }
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
