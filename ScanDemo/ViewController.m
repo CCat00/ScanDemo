@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ScanViewController.h"
 
 @interface ViewController ()
 
@@ -16,12 +17,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"微信";
     // Do any additional setup after loading the view, typically from a nib.
+    //self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"扫一扫"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(rightNaviBarBtnClick)];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - action Methods
+- (void)rightNaviBarBtnClick {
+    ScanViewController *scanVC = [ScanViewController new];
+    [self.navigationController pushViewController:scanVC animated:YES];
 }
 
 @end

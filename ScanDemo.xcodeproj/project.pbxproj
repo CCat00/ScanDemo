@@ -13,6 +13,18 @@
 		6800DE5A1CB5F7A7009E8416 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE581CB5F7A7009E8416 /* Main.storyboard */; };
 		6800DE5C1CB5F7A7009E8416 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE5B1CB5F7A7009E8416 /* Assets.xcassets */; };
 		6800DE5F1CB5F7A7009E8416 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE5D1CB5F7A7009E8416 /* LaunchScreen.storyboard */; };
+		6800DE6A1CB5F7FD009E8416 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE681CB5F7FD009E8416 /* ScanViewController.m */; };
+		6800DE6B1CB5F7FD009E8416 /* ScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE691CB5F7FD009E8416 /* ScanViewController.xib */; };
+		6800DE771CB61038009E8416 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE6E1CB61038009E8416 /* SVIndefiniteAnimatedView.m */; };
+		6800DE781CB61038009E8416 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE701CB61038009E8416 /* SVProgressAnimatedView.m */; };
+		6800DE791CB61038009E8416 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE721CB61038009E8416 /* SVProgressHUD.bundle */; };
+		6800DE7A1CB61038009E8416 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE741CB61038009E8416 /* SVProgressHUD.m */; };
+		6800DE7B1CB61038009E8416 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE761CB61038009E8416 /* SVRadialGradientLayer.m */; };
+		6800DE7F1CB61512009E8416 /* ScanResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE7D1CB61512009E8416 /* ScanResultViewController.m */; };
+		6800DE801CB61512009E8416 /* ScanResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE7E1CB61512009E8416 /* ScanResultViewController.xib */; };
+		6800DE841CB62380009E8416 /* ScanBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6800DE831CB62380009E8416 /* ScanBoxView.m */; };
+		6800DE8C1CB6252D009E8416 /* scanBoxBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE8A1CB6252D009E8416 /* scanBoxBg.png */; };
+		6800DE8D1CB6252D009E8416 /* scanLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 6800DE8B1CB6252D009E8416 /* scanLine.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +38,26 @@
 		6800DE5B1CB5F7A7009E8416 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6800DE5E1CB5F7A7009E8416 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6800DE601CB5F7A7009E8416 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6800DE671CB5F7FD009E8416 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		6800DE681CB5F7FD009E8416 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		6800DE691CB5F7FD009E8416 /* ScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanViewController.xib; sourceTree = "<group>"; };
+		6800DE6D1CB61038009E8416 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		6800DE6E1CB61038009E8416 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		6800DE6F1CB61038009E8416 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		6800DE701CB61038009E8416 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		6800DE711CB61038009E8416 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		6800DE721CB61038009E8416 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		6800DE731CB61038009E8416 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		6800DE741CB61038009E8416 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		6800DE751CB61038009E8416 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		6800DE761CB61038009E8416 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		6800DE7C1CB61512009E8416 /* ScanResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanResultViewController.h; sourceTree = "<group>"; };
+		6800DE7D1CB61512009E8416 /* ScanResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanResultViewController.m; sourceTree = "<group>"; };
+		6800DE7E1CB61512009E8416 /* ScanResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanResultViewController.xib; sourceTree = "<group>"; };
+		6800DE821CB62380009E8416 /* ScanBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanBoxView.h; sourceTree = "<group>"; };
+		6800DE831CB62380009E8416 /* ScanBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanBoxView.m; sourceTree = "<group>"; };
+		6800DE8A1CB6252D009E8416 /* scanBoxBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanBoxBg.png; sourceTree = "<group>"; };
+		6800DE8B1CB6252D009E8416 /* scanLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanLine.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +90,8 @@
 		6800DE4E1CB5F7A7009E8416 /* ScanDemo */ = {
 			isa = PBXGroup;
 			children = (
+				6800DE6C1CB61038009E8416 /* SVProgressHUD */,
+				6800DE661CB5F7EB009E8416 /* ScanVC */,
 				6800DE521CB5F7A7009E8416 /* AppDelegate.h */,
 				6800DE531CB5F7A7009E8416 /* AppDelegate.m */,
 				6800DE551CB5F7A7009E8416 /* ViewController.h */,
@@ -77,6 +111,56 @@
 				6800DE501CB5F7A7009E8416 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6800DE661CB5F7EB009E8416 /* ScanVC */ = {
+			isa = PBXGroup;
+			children = (
+				6800DE891CB6250F009E8416 /* Resources */,
+				6800DE811CB62371009E8416 /* ScanBoxView */,
+				6800DE671CB5F7FD009E8416 /* ScanViewController.h */,
+				6800DE681CB5F7FD009E8416 /* ScanViewController.m */,
+				6800DE691CB5F7FD009E8416 /* ScanViewController.xib */,
+				6800DE7C1CB61512009E8416 /* ScanResultViewController.h */,
+				6800DE7D1CB61512009E8416 /* ScanResultViewController.m */,
+				6800DE7E1CB61512009E8416 /* ScanResultViewController.xib */,
+			);
+			path = ScanVC;
+			sourceTree = "<group>";
+		};
+		6800DE6C1CB61038009E8416 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				6800DE6D1CB61038009E8416 /* SVIndefiniteAnimatedView.h */,
+				6800DE6E1CB61038009E8416 /* SVIndefiniteAnimatedView.m */,
+				6800DE6F1CB61038009E8416 /* SVProgressAnimatedView.h */,
+				6800DE701CB61038009E8416 /* SVProgressAnimatedView.m */,
+				6800DE711CB61038009E8416 /* SVProgressHUD-Prefix.pch */,
+				6800DE721CB61038009E8416 /* SVProgressHUD.bundle */,
+				6800DE731CB61038009E8416 /* SVProgressHUD.h */,
+				6800DE741CB61038009E8416 /* SVProgressHUD.m */,
+				6800DE751CB61038009E8416 /* SVRadialGradientLayer.h */,
+				6800DE761CB61038009E8416 /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		6800DE811CB62371009E8416 /* ScanBoxView */ = {
+			isa = PBXGroup;
+			children = (
+				6800DE821CB62380009E8416 /* ScanBoxView.h */,
+				6800DE831CB62380009E8416 /* ScanBoxView.m */,
+			);
+			path = ScanBoxView;
+			sourceTree = "<group>";
+		};
+		6800DE891CB6250F009E8416 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6800DE8A1CB6252D009E8416 /* scanBoxBg.png */,
+				6800DE8B1CB6252D009E8416 /* scanLine.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,9 +220,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6800DE791CB61038009E8416 /* SVProgressHUD.bundle in Resources */,
 				6800DE5F1CB5F7A7009E8416 /* LaunchScreen.storyboard in Resources */,
+				6800DE801CB61512009E8416 /* ScanResultViewController.xib in Resources */,
+				6800DE8C1CB6252D009E8416 /* scanBoxBg.png in Resources */,
+				6800DE8D1CB6252D009E8416 /* scanLine.png in Resources */,
 				6800DE5C1CB5F7A7009E8416 /* Assets.xcassets in Resources */,
 				6800DE5A1CB5F7A7009E8416 /* Main.storyboard in Resources */,
+				6800DE6B1CB5F7FD009E8416 /* ScanViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,9 +238,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6800DE771CB61038009E8416 /* SVIndefiniteAnimatedView.m in Sources */,
+				6800DE7F1CB61512009E8416 /* ScanResultViewController.m in Sources */,
 				6800DE571CB5F7A7009E8416 /* ViewController.m in Sources */,
 				6800DE541CB5F7A7009E8416 /* AppDelegate.m in Sources */,
+				6800DE7B1CB61038009E8416 /* SVRadialGradientLayer.m in Sources */,
+				6800DE7A1CB61038009E8416 /* SVProgressHUD.m in Sources */,
 				6800DE511CB5F7A7009E8416 /* main.m in Sources */,
+				6800DE841CB62380009E8416 /* ScanBoxView.m in Sources */,
+				6800DE6A1CB5F7FD009E8416 /* ScanViewController.m in Sources */,
+				6800DE781CB61038009E8416 /* SVProgressAnimatedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
